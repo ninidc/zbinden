@@ -1,0 +1,33 @@
+{{>Admin/partials/header}}
+
+<div class="col-md-12">
+	<hr />
+	<a href="/admin/users/create" class="btn btn-default">Ajouter un utilisateur</a>
+
+	<div class="clearfix"></div>
+	<br />
+
+	<table class="table">
+		<tr>
+			<th>#</th>
+			<th>User</th>
+			<th></th>
+		</tr>
+		{{#USERS}}
+			<tr>
+				<td>{{user_id}}</td>
+				<td>
+					<a href="/admin/users/{{user_id}}">{{username}}</a>
+				</td>
+				<td>
+					<p class="pull-right">
+						<a href="/admin/users/{{user_id}}">Editer</a>
+						<a href="/admin/users/delete/{{user_id}}">Supprimer</a>
+					</p>
+				</td>
+			</tr>
+		{{/USERS}}
+	</table>		
+</div>
+
+{{>Admin/partials/footer}}

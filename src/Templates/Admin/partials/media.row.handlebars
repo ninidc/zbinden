@@ -1,0 +1,42 @@
+<div class="row-fluid media-row">
+
+    <input type="hidden" name="meta-keys[]" value="{{key}}" />
+    <input type="hidden" name="meta-values[]" value="{{value}}" />
+    
+    <div class="span1">
+        <img src="{{domain}}/uploads/{{file}}?h=200" class="img-polaroid" align="left" />
+    </div>
+    
+    <div class="span9">
+        <div style="padding-left: 10px;">    
+            <h5>{{title}}</h5>
+            <p>{{resume}}</p>
+            <div class="muted"><small>{{date}}</small></div>
+            <div><small>Mime Type : {{mime_type}}</small></div>
+        </div>
+    </div>
+    <a href="#" class="media-delete" onclick="APW.mediaSelector.remove($(this)); return false;"><i class="icon-remove"></i></a>
+</div>
+
+
+<style>
+.media-row {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+    background-color: #f5f5f5;
+}
+
+.media-row:hover {
+    background-color: #f5f5f5;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.media-delete {
+    float: right;
+    margin-right: 15px;
+}
+</style>
+
+

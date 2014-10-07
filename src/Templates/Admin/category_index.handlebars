@@ -1,0 +1,37 @@
+{{>Admin/partials/header}}
+
+<div class="col-md-12">
+	<hr />
+	<a href="/admin/categories/create" class="btn btn-default">Ajouter une catégorie</a>
+
+	<div class="clearfix"></div>
+	<br />
+
+	<table class="table">
+		<tr>
+			<th>#</th>
+			<th>Nom</th>
+			<th>Parent</th>
+			<th>Nb pages</th>
+			<th></th>
+		</tr>
+		{{#CATEGORIES}}
+			<tr>
+				<td>{{category_id}}</td>
+				<td>
+					<a href="/admin/categories/{{category_id}}">{{name}}</a>
+				</td>
+				<td>{{parent.name}}</td>
+				<td>{{count}}</td>
+				<td>
+					<p class="pull-right">
+						<a href="/admin/categories/{{category_id}}">Editer</a>
+						<a href="">Supprimer</a>
+					</p>
+				</td>
+			</tr>
+		{{/CATEGORIES}}
+	</table>		
+</div>
+
+{{>Admin/partials/footer}}

@@ -1,0 +1,63 @@
+{{>Admin/partials/header}}
+
+<div class="col-md-12">
+	<hr />
+	
+	{{#if MESSAGE}}
+		<p class="bg-success" style="padding: 15px;">{{MESSAGE}}</p>
+	{{/if}}
+
+	{{#if ERROR}}
+		<p class="bg-danger" style="padding: 15px;">{{ERROR}}</p>
+	{{/if}}
+
+	<form action="/admin/pages/save" method="POST" role="form">
+
+		<input type="hidden" name="page_id" value="{{PAGE.page_id}}">
+		<input type="hidden" name="date" value="{{PAGE.date}}">
+
+		
+
+		<div class="form-group">
+			<label for="inputStatus">Status</label>
+			<select name="status" class="form-control" id="inputStatus">
+				<option value="draft" {{#ifCond PAGE.status == draft}}selected{{/ifCond}}>Brouillon</option>
+				<option value="published" {{#ifCond PAGE.status == published}}selected{{/ifCond}}>Publiée</option>
+			</select>
+		</div>
+
+		<div class="form-group">
+			<label for="inputTitle">Titre</label>
+			<input type="text" class="form-control" id="inputTitle" placeholder="Title" name="title" value="{{PAGE.title}}">
+		</div>
+
+		<div class="form-group">
+			<label for="inputSlug">Slug</label>
+			<input type="text" class="form-control" id="inputSlug" placeholder="Slug" name="slug" value="{{PAGE.slug}}">
+		</div>
+
+		<div class="form-group">
+			<label for="inputCategory">Categorie</label>
+			<select name="category_id" class="form-control" id="inputCategory">
+				<option value="0">---</option>
+				{{#CATEGORIES}}
+				<option value="{{category_id}}" {{#ifCond category_id == ../PAGE.category_id}}selected{{/ifCond}}>{{name}}</option>
+				{{/CATEGORIES}}
+			</select>
+		</div>
+
+		<div class="form-group">
+			<label for="inputContent">Contenu</label>
+			<textarea class="form-control" rows="5" id="inputContent" name="content">{{PAGE.content}}</textarea>
+		</div>
+
+		<div class="form-group">
+			<p class="pull-right">
+				<input type="submit" value="Envoyer" class="btn btn-primary" />
+			</p>
+		</div>
+
+	</form>
+</div>
+
+{{>Admin/partials/footer}}

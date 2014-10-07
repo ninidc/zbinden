@@ -1,0 +1,126 @@
+<script type="text/x-handlebars-template" id="main">
+<div class="row">
+
+<!--
+    <form action="" method="POST"  class="form-horizontal form-filter">
+        <input type="text" name="by_title" />
+        <input type="submit" value="Filter" class="btn btn-primary"/>
+    </form>
+-->
+
+    <div class="mediaSelector">
+        <div class="col-md-8">
+            <ul class="selectorTable">
+                {{{medias}}}
+            </ul>
+            <div class="pages"></div>
+        </div>
+        <div class="col-md-4 form">
+            <div class="col-md-11">
+                <div class="filedropzone"><p align="center"><strong>Arrastra los archivos para subir</strong> <small>o pincha aquí</small><p></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</script>
+
+<script type="text/x-handlebars-template" id="medias">
+{{#medias}}
+    <li class="col-md-2 selectorTableCell">
+        <a href="#{{Media.id_media}}" class="thumb">
+            {{#ifvalue Media.type value="image"}}
+                <img src="{{../../WEBROOT}}uploads/medias/{{Media.file}}" alt="">
+            {{/ifvalue}}
+
+            {{#ifvalue Media.type value="video"}}
+                <i class="glyphicon glyphicon-film"></i>
+            {{/ifvalue}}
+
+            {{#ifvalue Media.type value="application"}}
+                <i class="glyphicon glyphicon-file"></i>
+            {{/ifvalue}}
+            <p align="center">
+                {{Media.filename}}<br />
+                {{#if Media.height}}
+                    {{Media.width}}x{{Media.height}}px
+                {{/if}}
+            </p>
+        </a>
+        
+    </li>
+{{/medias}}
+</script>
+
+<script type="text/x-handlebars-template" id="pagination">
+<ul class="pagination">
+
+    {{#if pagination.prev_page}}
+        <li><a href="#" data-page="{{pagination.prev_page}}">Prev</a></li>
+    {{else}}
+        <li class="disabled"><a href="#" data-page="{{pagination.prev_page}}">Prev</a></li>
+    {{/if}}
+
+    {{#pagination}}
+        <li><a href="#" data-page="{{.}}">{{.}}</a></li>
+    {{/pagination}}
+
+    {{#if pagination.next_page}}
+        <li><a href="#" data-page="{{pagination.next_page}}">Next</a></li>
+    {{else}}
+        <li class="disabled"><a href="#" data-page="{{pagination.next_page}}">Next</a></li>
+    {{/if}}
+
+</ul>
+</script>
+
+<script type="text/x-handlebars-template" id="form-image">
+<div class="col-md-11">
+<form class="form-horizontal" role="form">
+    <fieldset>
+
+        <div class="form-group">
+            <legend>{{Media.type}}</legend>
+            <div class="image-preview">
+                {{#ifvalue Media.type value="image"}}
+                    <img src="{{../WEBROOT}}uploads/medias/{{Media.file}}" class="img-responsive">
+                {{/ifvalue}}
+
+                {{#ifvalue Media.type value="video"}}
+                <video controls src="{{../WEBROOT}}uploads/medias/{{Media.file}}" width="280" height="200" ></video>
+                {{/ifvalue}}
+
+                <input type="hidden" value="{{Media.file}}" name="file" id="file" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Tipo</label> : {{Media.mime_type}}<br />
+            <label>Nombre</label> : {{Media.filename}}<br />
+
+            {{#if Media.height}}
+            <label>Medidas</label> : {{Media.width}}x{{Media.height}}px
+            {{/if}}
+        </div>
+        
+        <div class="form-group">
+            <label>Título</label>
+            <input type="text" name="title" class="form-control" value="{{Media.title}}" id="title">
+        </div>
+        
+        <div class="form-group">
+            <label>Descripción</label>
+            <textarea name="resume" rows="3" class="form-control" id="resume">{{Media.resume}}</textarea>
+        </div>
+        
+        <div class="form-group">
+            <input type="hidden" name="mime_type" value="{{Media.mime_type}}" id="mime_type">
+            <input type="hidden" name="date" value="{{Media.date}}" id="date">
+            
+            <button type="submit" class="btn btn-primary"><i class="icon-plus icon-white"></i> Añadir</button>
+            <button type="button" class="clear-form btn btn-default"><i class="icon-remove icon-white"></i> Cerrar</button>
+        </div>
+    </fieldset>
+</form>
+</div>
+</script>

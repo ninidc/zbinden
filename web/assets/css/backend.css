@@ -1,0 +1,67 @@
+/************************************
+*	RESET CSS
+************************************/
+h1, h2, h3, h4, h5 {
+	margin: 0;
+	padding: 0;
+}
+/************************************/
+
+
+body {
+	font-family: 'OpenSansRegular', Arial, sans-serif;
+}
+
+.connect span {
+	padding: 0 10px;
+}
+
+
+/************************************
+*	MENU
+************************************/
+.menu {
+	border-right:#efefef solid 1px;
+	min-height:100%;
+	position:fixed;
+	max-width:187px;
+	padding-top: 20px;
+}
+
+.menu a {
+	color: #474747;
+}
+
+.menu a span {
+	margin-right: 15px;
+	color: #dcdcdc;
+}
+
+.menu .nav-pills>li a:hover,
+.menu .nav-pills>li.active>a,
+.menu .nav-pills>li.active>a:hover,
+.menu .nav-pills>li.active>a:focus {
+	background-color: #efefef;
+	border-radius: 0;
+	color: #474747;
+	padding: 10px 15px;
+}
+
+.menu .nav-pills>li.active>a span {
+	color: #474747;
+}
+/************************************/
+
+
+/************************************
+*	CONTENT
+************************************/
+.content {
+	padding-top: 20px;
+}
+
+.content .page-title{
+	font-weight: normal;
+	font-size: 24px;
+}
+/************************************/

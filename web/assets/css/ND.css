@@ -1,0 +1,180 @@
+/********************************************
+*   ND LIBS STYLE
+*   ===============
+*   Author : Nicolas DEL CASTILLO
+********************************************/
+
+.ND_overlay {
+  position: fixed;
+  top: 0;
+  left: 0%;
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  z-index:1001;
+  opacity: 0.4;
+  -moz-opacity: 0.9;
+  opacity: .90;
+  filter: alpha(opacity=90);
+}
+
+.ND_lightbox {
+  position: fixed;
+
+  width: 940px;
+  left: 50%;
+  margin-left: -470px;
+  
+  top: 10%;
+  height: 78%;
+
+  background-color: white;
+  z-index:1002;
+}
+
+.ND_lightbox .top {
+    position: absolute; 
+    top: 10px; 
+    right: 10px;
+    z-index:1003;
+    padding: 5px;
+}
+
+.ND_lightbox .content {
+    height: 97%;
+    /*margin-top: 3%;*/
+    overflow: none;
+    border: none;
+/*  overflow-y : scroll;*/
+}
+
+.mediaSelector {
+  padding-top: 15px;
+}
+
+.mediaSelector .form img {
+    max-height: 160px;
+}
+
+.mediaSelector .form .image-preview {
+  height: 160px;
+}
+
+.mediaSelector .selectorTable {
+    position: relative;
+    display: table;
+    /*border-right: 1px solid #efefef;*/
+}
+
+.mediaSelector .selectorTableCell {
+    position: relative;
+    display: table-cell;
+    width: 110px;
+    height: 110px;
+}
+
+.mediaSelector .selectorTableCell img {
+    max-height: 80px;
+    max-width: 100px;
+}
+
+.mediaSelector .selectorTableCell a {
+  display: block;
+  width: 110px;
+  height: 110px;
+  text-align: center;
+}
+
+.mediaSelector .selectorTableCell p {
+  padding: 0;
+  margin: 0;
+  text-align: center;
+}
+/*
+.mediaSelector .selectorTableCell  {
+  min-width: 120px;
+  min-height: 120px;
+}
+*/
+
+.mediaSelector .selectorTable li p {
+    font-size: 10px;
+}
+
+.mediaSelector .pages{
+  text-align: center;
+}
+
+.filedropzone {
+    background-image: url("../img/glissezoff.png");
+    background-repeat: no-repeat;
+    background-position: center center;
+    height: 200px;
+    border: 2px dotted #efefef;
+}
+
+.filedropzone.active {
+    background: none;
+    background-image: url("../img/glissezon.png");
+    background-repeat: no-repeat;
+    background-position: center center;
+    border: 2px dotted #efefef;
+}
+/**/
+
+
+
+/*
+* Tag suggest
+*/
+.tt-query {
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+
+.tt-hint {
+    color: #999
+}
+
+.tt-dropdown-menu {
+    width: 200px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+    -moz-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+    box-shadow: 0 5px 10px rgba(0,0,0,.2);
+}
+
+.tt-suggestion {
+    padding: 3px 10px;
+    line-height: 24px;
+}
+
+.tt-suggestion:hover {
+  background-color: #5bc0de;
+  color: white;
+  font-weight: bold;
+}
+
+.tt-suggestion.tt-is-under-cursor {
+    color: #fff;
+    background-color: #0097cf;
+
+}
+
+.tt-suggestion p {
+    margin: 0;
+}
+
+
+/**
+* Disable preview for dropzoneJS 
+*/
+.dz-file-preview {
+    display: none;
+}

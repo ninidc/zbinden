@@ -1,0 +1,12 @@
+<p class="text-right">
+    <ul class="pagination">
+        {{#first}}<li><a href="{{url}}"><<</a></li>{{/first}}
+        {{#prev}}<li><a href="{{url}}"><</a></li>{{/prev}}
+        {{#pages}}
+            {{^current}}<li><a href="{{url}}">{{label}}</a></li>{{/current}}
+            {{#current}}<li class="active"><span>{{label}}</span></li>{{/current}}
+        {{/pages}}
+        {{#next}}<li><a href="{{url}}">></a></li>{{/next}}
+        {{#last}}<li><a href="{{url}}">>></a></li>{{/last}}
+     </ul>
+</p>

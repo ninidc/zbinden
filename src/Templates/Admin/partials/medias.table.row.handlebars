@@ -1,0 +1,21 @@
+{{#medias}}
+<tr>
+    <td>
+        <a href="{{WEBROOT}}admin/media/read/{{media_id}}/">
+            <img src="{{domain}}/uploads/{{file}}?h=100"  border="0" style="max-height:100px; max-width: 100px;" />
+        </a>
+    </td>
+    <td><a href="{{WEBROOT}}admin/media/read/{{media_id}}/">{{title}}</a></td>
+    <td>{{type}}</td>
+    <td>{{date}}</td>
+    <td>{{resume}}</td>
+    <td>
+        <div class="pull-right">
+            <a href="{{../WEBROOT}}admin/media/read/{{media_id}}/"><i class="icon-edit"></i></a> 
+            <a href="{{../WEBROOT}}admin/media/delete/{{media_id}}/"><i class="icon-trash"></i></a>
+        </div>
+    </td>
+</tr>
+{{/medias}}
+
+

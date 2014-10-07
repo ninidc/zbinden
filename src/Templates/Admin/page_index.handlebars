@@ -1,0 +1,46 @@
+{{>Admin/partials/header}}
+
+<div class="col-md-12">
+	<hr />
+	<a href="/admin/pages/create" class="btn btn-default">Ajouter un page</a>
+
+	<div class="clearfix"></div>
+	<br />
+
+	<table class="table">
+		<tr>
+			<th>#</th>
+			<th>Title</th>
+			<th>Catégorie</th>
+			<th>Date</th>
+			<th>Status</th>
+			<th></th>
+		</tr>
+		{{#PAGES}}
+			<tr>
+				<td>{{page_id}}</td>
+				<td>
+					<a href="/admin/pages/{{page_id}}">{{title}}</a>
+				</td>
+				<td>{{category_id}}</td>
+				<td>{{date}}</td>
+				<td>
+					{{#ifCond status == draft}}Brouillon{{/ifCond}}
+					{{#ifCond status == published}}Publiée{{/ifCond}}
+				</td>
+				<td>
+					<p class="pull-right">
+						<a href="/admin/pages/{{page_id}}">Editer</a>
+						<a href="">Supprimer</a>
+					</p>
+				</td>
+			</tr>
+		{{/PAGES}}
+	</table>
+
+		
+</div>
+
+
+
+{{>Admin/partials/footer}}
