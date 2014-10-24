@@ -58,10 +58,9 @@ ND.mediaSelector = {
             }
         }
 
-        $.get(ND.WEBROOT + 'admin/media/index/page:' + ND.mediaSelector.page, {format: "json", type: type},
+        $.get(ND.WEBROOT + 'admin/medias/?page_number=' + ND.mediaSelector.page, {format: "json", type: type},
             function(data) {
 
-			
             if(ND.isJSON(data)) {
                 var JsonData = JSON.parse(data);
             } else {
@@ -157,7 +156,7 @@ ND.mediaSelector = {
 
     loadMediaData: function(id) {
         // Chargement du media.
-        $.get(ND.WEBROOT + 'admin/media/view/' + id + '/', {format: "json"},
+        $.get('/admin/medias/' + id, {format: "json"},
             function(data) {
 				
 				
@@ -215,7 +214,7 @@ ND.mediaSelector = {
         var objId = ".filedropzone";
 
         var myDropzone = new Dropzone(objId, {
-            url                 : ND.WEBROOT + 'admin/media/add/?format=json',
+            url                 : '/admin/medias/save?format=json',
             paramName           : 'data[file]',
             thumbnail: function(file, dataUrl) {
                 /* do something else with the dataUrl */
@@ -287,7 +286,7 @@ ND.mediaSelector = {
 //------------------------------------------------------------//
 //                  PRELOAD TEMPLATES
 //------------------------------------------------------------//
-$.get(ND.WEBROOT + 'views/admin/partials/mediaselector.handlebars', function(content) {
+$.get(ND.WEBROOT + 'templates/Admin/partials/mediaselector.handlebars', function(content) {
     
     templates = $.parseHTML(content);
 

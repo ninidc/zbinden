@@ -1,37 +1,37 @@
 {{#MEDIAS}}
 <tr>
-    <td width="40">{{Media.id_media}}</td>
+    <td width="40">{{media_id}}</td>
     <td width="150">
-        {{#ifvalue Media.type value="image"}}
-            <img src="{{../../WEBROOT}}uploads/medias/{{Media.file}}" class="img-rounded" style="max-width:140px;max-height:80px;" />
+        {{#ifvalue type value="image"}}
+            <img src="/web/uploads/medias/{{file}}" class="img-rounded" style="max-width:140px;max-height:80px;" />
         {{/ifvalue}}
     </td>
     <td>
-        <strong><a href="{{../WEBROOT}}admin/media/view/{{Media.id_media}}/">{{Media.filename}}</a></strong>
+        <strong><a href="/admin/medias/{{media_id}}/">{{filename}}</a></strong>
     </td>
     <td>
-        {{#ifvalue Media.type value="image"}}
+        {{#ifvalue type value="image"}}
             <i class="glyphicon glyphicon-picture"></i>
         {{/ifvalue}}
 
-        {{#ifvalue Media.type value="video"}}
+        {{#ifvalue type value="video"}}
             <i class="glyphicon glyphicon-film"></i>
         {{/ifvalue}}
 
-        {{#ifvalue Media.type value="application"}}
+        {{#ifvalue type value="application"}}
             <i class="glyphicon glyphicon-file"></i>
         {{/ifvalue}}
     </td>
     <td>
-        {{Media.type}}
+        {{type}}
     </td>
     <td>
-        {{Media.mime_type}}
+        {{mime_type}}
     </td>
     <td>
         <div class="pull-right">
-            <a href="{{../WEBROOT}}admin/media/view/{{Media.id_media}}/"><i class="glyphicon glyphicon-pencil"></i></a> 
-            <a href="{{../WEBROOT}}admin/media/delete/{{Media.id_media}}/" class="confirm"><i class="glyphicon glyphicon-trash"></i></a>
+            <a href="/admin/medias/{{media_id}}/"><i class="glyphicon glyphicon-pencil"></i></a> 
+            <a href="/admin/medias/delete/{{media_id}}/" class="confirm"><i class="glyphicon glyphicon-trash"></i></a>
         </div>
     </td>
 </tr>

@@ -1,0 +1,55 @@
+{{>Admin/partials/header}}
+
+<div class="col-md-12">
+	<hr />
+	
+	{{#if MESSAGE}}
+		<p class="bg-success" style="padding: 15px;">{{MESSAGE}}</p>
+	{{/if}}
+
+	{{#if ERROR}}
+		<p class="bg-danger" style="padding: 15px;">{{ERROR}}</p>
+	{{/if}}
+
+	<form action="/admin/medias/save" method="POST" role="form" enctype="multipart/form-data">
+
+		<input type="hidden" name="media_id" value="{{MEDIA.media_id}}">
+		<input type="hidden" name="date" value="{{MEDIA.date}}">
+		
+		{{#if MEDIA.file}}
+		<div class="form-group">
+		{{#ifCond MEDIA.type == image}}
+		    <img src="/web/uploads/medias/{{MEDIA.file}}" class="img-polaroid" style="max-width:300px">
+		    <br />
+		    <strong>Dimensions</strong> : {{MEDIA.width}}x{{MEDIA.height}}px
+		    <br />
+		    <strong>Mime type</strong> : {{MEDIA.mime_type}}
+		{{/ifCond}}
+
+		{{#ifCond MEDIA.type == video}}
+		    <video controls src="/web/uploads/medias/{{MEDIA.file}}" width="480" height="320" ></video>
+		{{/ifCond}}
+
+		</div>
+		{{/if}}
+
+		<div class="form-group">
+			<label for="title">Titre</label>
+			<input type="text" name="title" class="form-control" value="{{MEDIA.title}}" id="title" placeholder="Titre">
+		</div>
+
+		<div class="form-group">
+			<label for="file">Fichier</label>
+			<input type="file" name="file" id="file"/>
+		</div>
+
+		<div class="form-group">
+			<p class="pull-right">
+				<input type="submit" value="Envoyer" class="btn btn-primary" />
+			</p>
+		</div>
+
+	</form>
+</div>
+
+{{>Admin/partials/footer}}

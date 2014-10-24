@@ -1,0 +1,75 @@
+{{>Admin/partials/header}}
+
+<div class="col-md-12">
+    <hr />
+    <div class="clearfix"></div>
+    <br />
+
+    <!--  Dropzone for upload file -->
+    <div class="filedropzone" id="filedropzone"><p align="center"><strong>Déposez un fichier</strong><br /><small>Ou bien cliquez-ici...</small><p></div>
+    <p>
+        <div class="progress">
+          <div class="progress-bar" id="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+            <span class="sr-only">60%</span>
+          </div>
+        </div>
+    </p>
+
+    <script language="javascript">
+        ND.setDropzone("#filedropzone");
+    </script>
+    <!-- // -->
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th></th>
+                <th>Nom du fichier</th>
+                <th>Type</th>
+                <th>Type mime</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="medias-table">
+            {{#MEDIAS}}
+                <tr>
+                    <td width="40">{{media_id}}</td>
+                    <td width="150">
+                        {{#ifCond type == image}}
+                            <img src="/web/uploads/medias/{{file}}" class="img-rounded" style="max-width:140px;max-height:80px;" />
+                        {{/ifCond}}
+                    </td>
+                    <td>
+                        <strong><a href="/admin/medias/{{media_id}}">{{filename}}</a></strong>
+                    </td>
+                    <td>
+                        {{#ifCond type == image}}
+                            <i class="glyphicon glyphicon-picture"></i>
+                        {{/ifCond}}
+
+                        {{#ifCond type == video}}
+                            <i class="glyphicon glyphicon-film"></i>
+                        {{/ifCond}}
+
+                        {{#ifCond type == application}}
+                            <i class="glyphicon glyphicon-file"></i>
+                        {{/ifCond}}
+                    </td>
+                    <td>
+                        {{mime_type}}
+                    </td>
+                    <td>
+                        <div class="pull-right">
+                            <a href="/admin/medias/{{media_id}}"><i class="glyphicon glyphicon-pencil"></i></a> 
+                            <a href="/admin/medias/delete/{{media_id}}" class="confirm"><i class="glyphicon glyphicon-trash"></i></a>
+                        </div>
+                    </td>
+                </tr>
+            {{/MEDIAS}}
+        </tbody>
+    </table>
+
+</div>
+
+{{>Admin/partials/footer}}

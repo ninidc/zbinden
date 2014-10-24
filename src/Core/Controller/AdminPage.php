@@ -93,7 +93,7 @@ class AdminPage extends Controller
                 if($Page->save()) {
                     $this->Session->setNotification("Enregistrement effectué avec succès.");
 
-                    $url = $this->app['url_generator']->generate('admin.page.edit', array(
+                    $url = $this->app['url_generator']->generate('admin.medias.edit', array(
                         'id' => $Page->page_id
                     ));
                     
@@ -104,7 +104,7 @@ class AdminPage extends Controller
             }
         }
 
-        return $this->render("Admin/page_edit", array(
+        return $this->View->render("Admin/page_edit", array(
             "CATEGORIES"    => Category::fetchAll(),
             "TITLE"     => $Page->title,
             "PAGE"      => $Page,

@@ -8,7 +8,7 @@ ND.lightbox = {
 
         jQuery.extend(settings, options);
 
-        $.get(ND.WEBROOT + 'views/partials/lightbox.handlebars', function(template) {
+        $.get(ND.WEBROOT + 'templates/Admin/partials/lightbox.handlebars', function(template) {
         
             // Instancie Handlerbars
             var template = Handlebars.compile(template);

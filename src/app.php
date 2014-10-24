@@ -62,7 +62,7 @@ $app->register(new Silex\Provider\SecurityServiceProvider(), array(
     )
 ));
 */
-$app['upload_folder']       = __DIR__ . '/../web/uploads';
+$app['upload_folder']       = __DIR__ . '/../web/uploads/';
 $app['sites_folder']        = __DIR__ . '/../web/sites/';
 $app['template_folder']     = __DIR__ . '/Templates/';
 

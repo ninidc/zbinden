@@ -111,8 +111,8 @@
         setDropzone: function(objId) {
 
             var myDropzone = new Dropzone(objId, {
-                url                 : ND.WEBROOT + 'admin/media/add/?format=json',
-                paramName           : 'data[file]',
+                url                 : '/admin/medias/save?format=json',
+                paramName           : 'file',
                 thumbnail: function(file, dataUrl) {
                     /* do something else with the dataUrl */
                 }
@@ -165,7 +165,7 @@
 
                         JsonData.WEBROOT    = ND.WEBROOT;
 
-                        $.get(ND.WEBROOT + 'views/admin/partials/medias.index.row.handlebars', function(content) {
+                        $.get(ND.WEBROOT + 'templates/Admin/partials/medias.index.row.handlebars', function(content) {
                             var template = Handlebars.compile(content);
                             $("#medias-table").html(template(JsonData));
                             $("#pagination").html(JsonData.pagination);

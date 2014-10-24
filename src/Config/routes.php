@@ -140,4 +140,50 @@ $routes[] = array(
 	"bind"			=> 'admin.users.save'
 );
 //--------------------------------------------------------------//
+
+
+//--------------------------------------------------------------//
+//              ADMIN MEDIAS
+//--------------------------------------------------------------//
+$routes[] = array(
+	"route" 		=> '/admin/medias/',
+	'type' 			=> 'get',
+	"controller" 	=> 'AdminMedia',
+	"method" 		=> "index",
+	"bind"			=> 'admin.medias.index'
+);
+
+$routes[] = array(
+	"route" 		=> '/admin/medias/create',
+	'type' 			=> 'get',
+	"controller" 	=> 'AdminMedia',
+	"method" 		=> "edit",
+	"bind"			=> 'admin.medias.create'
+);
+
+$routes[] = array(
+	"route" 		=> '/admin/medias/{id}',
+	'type' 			=> 'get',
+	"controller" 	=> 'AdminMedia',
+	"method" 		=> "edit",
+	"bind"			=> 'admin.medias.edit'
+);
+
+
+$routes[] = array(
+	"route" 		=> '/admin/medias/delete/{id}',
+	'type' 			=> 'get',
+	"controller" 	=> 'AdminMedia',
+	"method" 		=> "delete",
+	"bind"			=> 'admin.medias.delete'
+);
+
+$routes[] = array(
+	"route" 		=> '/admin/medias/save',
+	'type' 			=> 'POST',
+	"controller" 	=> 'AdminMedia',
+	"method" 		=> "save",
+	"bind"			=> 'admin.medias.save'
+);
+//--------------------------------------------------------------//
 ?>
