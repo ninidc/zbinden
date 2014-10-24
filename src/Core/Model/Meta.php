@@ -16,7 +16,7 @@ class Meta extends Model {
     public $field_name;
     public $field_id;
     
-    public static $table = "entrie_metas";
+    public static $table = "metas";
     public static $index = "meta_id";
 
   	public function __construct($data = array()) 

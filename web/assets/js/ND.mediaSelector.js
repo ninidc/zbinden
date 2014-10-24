@@ -61,94 +61,94 @@ ND.mediaSelector = {
         $.get('/admin/medias/?page_number=' + ND.mediaSelector.page, {format: "json", type: type},
             function(data) {
 
-            if(ND.isJSON(data)) {
-                var JsonData = JSON.parse(data);
-            } else {
-                var JsonData = data;
-            }
+                if(ND.isJSON(data)) {
+                    var JsonData = JSON.parse(data);
+                } else {
+                    var JsonData = data;
+                }
 
-			var pages           = new Array();
-            
-            var nbPages = 0;
-            var page = 0;
-            
-            if(JsonData.pagination) {
-            	nbPages         = parseInt(JsonData.pagination.total);
-	            page            = parseInt(JsonData.pagination.current);
-	
-	            pages["next_page"]  = parseInt(JsonData.pagination.next_page);
-	            pages["prev_page"]  = parseInt(JsonData.pagination.prev_page);
-            }
+    			var pages           = new Array();
+                
+                var nbPages = 0;
+                var page = 0;
+                
+                if(JsonData.pagination) {
+                	nbPages         = parseInt(JsonData.pagination.total);
+    	            page            = parseInt(JsonData.pagination.current);
+    	
+    	            pages["next_page"]  = parseInt(JsonData.pagination.next_page);
+    	            pages["prev_page"]  = parseInt(JsonData.pagination.prev_page);
+                }
 
-            var start           = page - Math.ceil(ND.mediaSelector.pageSize / 2);
-            var end             = page + Math.floor(ND.mediaSelector.pageSize / 2);
+                var start           = page - Math.ceil(ND.mediaSelector.pageSize / 2);
+                var end             = page + Math.floor(ND.mediaSelector.pageSize / 2);
 
-            if(end > nbPages) {
-                start   = nbPages - ND.mediaSelector.pageSize;
-                end     = nbPages;
-            }
-            
-            if(start < 1) {
-                start   = 1;
-                end     = start + ND.mediaSelector.pageSize;
-            }
-            
-            if(end > nbPages) {
-                end = nbPages;
-            }
-            
-            // Creating array of pages
-            for(i=start; i <= end; i++) {
-                pages.push(i);
-            }
+                if(end > nbPages) {
+                    start   = nbPages - ND.mediaSelector.pageSize;
+                    end     = nbPages;
+                }
+                
+                if(start < 1) {
+                    start   = 1;
+                    end     = start + ND.mediaSelector.pageSize;
+                }
+                
+                if(end > nbPages) {
+                    end = nbPages;
+                }
+                
+                // Creating array of pages
+                for(i=start; i <= end; i++) {
+                    pages.push(i);
+                }
 
-            // Pagination
-            if(end > 1) {
-                 var template = Handlebars.compile(ND.mediaSelector.getTemplate("pagination"));
-                $(".mediaSelector .pages").html(
+                // Pagination
+                if(end > 1) {
+                     var template = Handlebars.compile(ND.mediaSelector.getTemplate("pagination"));
+                    $(".mediaSelector .pages").html(
+                        template({
+                            pagination: pages
+                        })
+                    );
+                }
+                
+                // Rendu
+                var template = Handlebars.compile(ND.mediaSelector.getTemplate("medias"));
+                $(".mediaSelector .selectorTable").html(
                     template({
-                        pagination: pages
+                        MEDIAS: JsonData.MEDIAS,
+                        WEBROOT: ND.WEBROOT
                     })
                 );
-            }
-            
-            // Rendu
-            var template = Handlebars.compile(ND.mediaSelector.getTemplate("medias"));
-            $(".mediaSelector .selectorTable").html(
-                template({
-                    MEDIAS: JsonData.MEDIAS,
-                    WEBROOT: ND.WEBROOT
-                })
-            );
 
-            // Ecouteur
-            $(".selectorTable a").click(function(e) { 
-                e.preventDefault();
-                ND.mediaSelector.loadMediaData($(this).attr('href').replace(/^#/, ''));
-            });
-            
-            $(".ND_lightbox .content .pages a").click(function(e) { 
-                e.preventDefault();
-                ND.mediaSelector.page = $(this).attr("data-page");
-                //var text    = $(".ND_lightbox .content .form-filter input:text").val();
-                ND.mediaSelector.setGallery(options);
+                // Ecouteur
+                $(".selectorTable a").click(function(e) { 
+                    e.preventDefault();
+                    ND.mediaSelector.loadMediaData($(this).attr('href').replace(/^#/, ''));
+                });
                 
-            });
-            
-            /*
-            $(".ND_lightbox .content .form-filter").submit(function(e) { 
-            
-                e.preventDefault();
+                $(".ND_lightbox .content .pages a").click(function(e) { 
+                    e.preventDefault();
+                    ND.mediaSelector.page = $(this).attr("data-page");
+                    //var text    = $(".ND_lightbox .content .form-filter input:text").val();
+                    ND.mediaSelector.setGallery(options);
+                    
+                });
                 
-                var text    = $("input:text", $(this)).val();
-                var offset  = 0;
-                var limit   = ND.mediaSelector.limit;
-                ND.mediaSelector.setGallery(limit, offset, text);
+                /*
+                $(".ND_lightbox .content .form-filter").submit(function(e) { 
                 
-            });
-            */
-            
-            ND.mediaSelector.setDropZone();
+                    e.preventDefault();
+                    
+                    var text    = $("input:text", $(this)).val();
+                    var offset  = 0;
+                    var limit   = ND.mediaSelector.limit;
+                    ND.mediaSelector.setGallery(limit, offset, text);
+                    
+                });
+                */
+                
+                ND.mediaSelector.setDropZone();
             }
         );
     },

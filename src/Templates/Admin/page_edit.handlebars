@@ -55,20 +55,10 @@
 		  <p>
 		    <h5>Medias <small><a href="#" class="btn btn-default btn-xs media-selector">Ajouter</a></small></h5>
 		  </p>
-		  <table class="table">
-		  	<tr>
-				<td>
-					<textarea name="medias[]" style="display: none;">
-						value
-					</textarea>
-				</td>
-				<td>Type</td>
-				<td>
-					Preview
-				</td>
-				<td align="right"><a href="#" class="remove_meta"><i class="glyphicon glyphicon-remove"></i></a></td>
-			</tr>
-		  </table>
+		  <div id="medias">
+		  	<!-- MEDIAS FROM THE MEDIA SELECTOR -->
+		  	<!-- // -->
+		  </div>
 		</div>
 
 		<div class="form-group">
@@ -87,8 +77,17 @@ $(".media-selector").click(function(e){
     e.preventDefault();
 
     ND.mediaSelector.init({
-	  onSave : function(Meta) {
-	  	alert("save...");
+	  onSave : function(data) {
+	  	
+	  	var Meta 	= data;
+	  	Meta.data 	= JSON.stringify(Meta);
+	  	Meta.mkey 	= "page-media";
+
+	  	$.get(ND.WEBROOT + 'templates/Admin/partials/media.row.handlebars', function(template) {
+    		var template = Handlebars.compile(template);
+    		$("#medias").append(template(data));
+		});
+
 	    ND.mediaSelector.close();
 	  }
 	});

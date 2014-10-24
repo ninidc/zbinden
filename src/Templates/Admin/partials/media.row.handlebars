@@ -1,10 +1,10 @@
 <div class="row-fluid media-row">
 
-    <input type="hidden" name="meta-keys[]" value="{{key}}" />
-    <input type="hidden" name="meta-values[]" value="{{value}}" />
+    <input type="hidden" name="meta-key[]" value="{{mkey}}" />
+    <input type="hidden" name="meta-data[]" value="{{data}}" />
     
     <div class="span1">
-        <img src="{{domain}}/uploads/{{file}}?h=200" class="img-polaroid" align="left" />
+        <img src="/web/uploads/medias/{{file}}?h=200" style="max-height: 100px; max-width: 100px" class="img-polaroid" align="left" />
     </div>
     
     <div class="span9">
@@ -16,8 +16,9 @@
         </div>
     </div>
     <a href="#" class="media-delete" onclick="APW.mediaSelector.remove($(this)); return false;"><i class="icon-remove"></i></a>
-</div>
 
+    <div class="clearfix"></div>
+</div>
 
 <style>
 .media-row {
@@ -38,5 +39,3 @@
     margin-right: 15px;
 }
 </style>
-
-
