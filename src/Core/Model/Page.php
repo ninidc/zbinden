@@ -5,6 +5,7 @@
 namespace Core\Model;
 
 use Core\Model;
+use Core\Model\Meta;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -37,6 +38,18 @@ class Page extends Model {
     static public function loadValidatorMetadata(ClassMetadata $metadata)
     {
         $metadata->addPropertyConstraint('slug', new Assert\NotBlank());
+    }
+
+    public function getParsedMetas()
+    {
+        $Metas  = Meta::FetchAllByNameAndId("page_id", $this->page_id);
+        $data   = array();
+
+        foreach($Metas as $Meta) {
+            $data = json_decode($Meta->data);
+        }
+
+        return $data;
     }
 
 }

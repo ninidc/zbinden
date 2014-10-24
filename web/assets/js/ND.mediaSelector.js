@@ -274,7 +274,7 @@ ND.mediaSelector = {
     },
     
     remove: function(element) {
-        $(element).parent().fadeOut(500, function() {
+        $(element).parent().parent().fadeOut(500, function() {
             $(element).parent().remove();
         });
     }

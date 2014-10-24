@@ -37,6 +37,48 @@ class Meta extends Model {
 
     }
 
+    static public function deleteByNameAndId($field_name, $field_id) 
+    {
+        global $app;
+
+        $className = get_called_class();
+
+        $app['db']->delete($className::$table, array( 
+            "field_name" => $field_name,
+            "field_id"  => $field_id
+        ));
+    }
+
+
+    static public function FetchAllByNameAndId($field_name, $field_id) 
+    {
+        global $app;
+        
+        $className = get_called_class();
+
+        $sql = "
+            SELECT 
+                * 
+            FROM 
+                metas 
+            WHERE 
+                field_name = '".$field_name."'
+            AND 
+                field_id = '".$field_id."'
+        ";
+
+        $result = $app['db']->fetchAll($sql);
+        $data = array();
+
+        foreach($result as $r) {
+            $data[] = new $className($r);
+        }
+
+        return $data;
+    }
+
+    
+
     static public function findByFieldName($name)
     {
         global $app;
@@ -45,7 +87,7 @@ class Meta extends Model {
             SELECT 
                 * 
             FROM 
-                entrie_metas 
+                metas 
             WHERE 
                 field_name = ?
         ';

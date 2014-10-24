@@ -3,20 +3,25 @@
     <input type="hidden" name="meta-key[]" value="{{mkey}}" />
     <input type="hidden" name="meta-data[]" value="{{data}}" />
     
-    <div class="span1">
-        <img src="/web/uploads/medias/{{file}}?h=200" style="max-height: 100px; max-width: 100px" class="img-polaroid" align="left" />
+    <div class="col-md-3">
+        <img src="/web/uploads/medias/{{file}}?h=200" style="max-height: 150px; max-width: 150px" />
     </div>
     
-    <div class="span9">
-        <div style="padding-left: 10px;">    
-            <h5>{{title}}</h5>
-            <p>{{resume}}</p>
-            <div class="muted"><small>{{date}}</small></div>
-            <div><small>Mime Type : {{mime_type}}</small></div>
-        </div>
+    <div class="col-md-8">
+        <p>
+            <strong>{{title}}</strong><br />
+            {{#if resume}}{{resume}}<br />{{/if}}
+            {{#if date}}{{date}}<br />{{/if}}
+            {{#if mime_type}}{{mime_type}}<br />{{/if}}
+        </p>
     </div>
-    <a href="#" class="media-delete" onclick="APW.mediaSelector.remove($(this)); return false;"><i class="icon-remove"></i></a>
 
+    <div class="col-md-1">
+        <a href="#" class="media-delete pull-right" onclick="ND.mediaSelector.remove($(this)); return false;">
+            <i class="glyphicon glyphicon-trash"></i>
+        </a>
+    </div>
+    
     <div class="clearfix"></div>
 </div>
 
@@ -34,8 +39,4 @@
     border-radius: 5px;
 }
 
-.media-delete {
-    float: right;
-    margin-right: 15px;
-}
 </style>

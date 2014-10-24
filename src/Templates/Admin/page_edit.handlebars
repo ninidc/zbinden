@@ -57,6 +57,9 @@
 		  </p>
 		  <div id="medias">
 		  	<!-- MEDIAS FROM THE MEDIA SELECTOR -->
+		  	{{#METAS}}
+		  		{{>Admin/partials/media.row.handlebars}}
+		  	{{/METAS}}
 		  	<!-- // -->
 		  </div>
 		</div>
@@ -72,7 +75,6 @@
 
 
 <script>
-
 $(".media-selector").click(function(e){
     e.preventDefault();
 

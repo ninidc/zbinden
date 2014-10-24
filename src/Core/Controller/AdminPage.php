@@ -59,31 +59,38 @@ class AdminPage extends Controller
         $Page = Page::find($id);
 
         $data = array(
-            "PAGE"      => $Page,
+            "PAGE"          => $Page,
+            "METAS"         => $Page->getParsedMetas(),
             "CATEGORIES"    => Category::fetchAll(),
-            "MESSAGE"   => $this->Session->getNotification(),
-            "TITLE"     => isset($Page->title) ? $Page->title : "Nouvelle page"
+            "MESSAGE"       => $this->Session->getNotification(),
+            "TITLE"         => isset($Page->title) ? $Page->title : "Nouvelle page"
         );
 
         return $this->View->render("Admin/page_edit", $data);
     }
 
+
     public function saveMedias(Request $request, $Page) 
     {
+        // Deleting all metas before new save...
+        Meta::deleteByNameAndId("page_id", $Page->page_id);
+
         $keys = $request->get('meta-key');
         $data = $request->get('meta-data');
 
         foreach($keys as $index=>$key) {
-            $Meta = new Meta(array(
-                "mkey"          => $key,
-                "data"          => $data[$index],
-                "field_name"    => "page_id",
-                "field_id"      => $Page->page_id
-            ));
 
-            $Meta->save();
+            if($key != null && $data[$index] != null) {
+                $Meta = new Meta(array(
+                    "mkey"          => $key,
+                    "data"          => $data[$index],
+                    "field_name"    => "page_id",
+                    "field_id"      => $Page->page_id
+                ));
+
+                $Meta->save();
+            }
         }
-        
     }
 
 
