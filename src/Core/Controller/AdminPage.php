@@ -8,6 +8,7 @@ use Core\Controller;
 use Core\View;
 use Core\Model\User;
 use Core\Model\Page;
+use Core\Model\Meta;
 use Core\Model\Category;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -67,6 +68,24 @@ class AdminPage extends Controller
         return $this->View->render("Admin/page_edit", $data);
     }
 
+    public function saveMedias(Request $request, $Page) 
+    {
+        $keys = $request->get('meta-key');
+        $data = $request->get('meta-data');
+
+        foreach($keys as $index=>$key) {
+            $Meta = new Meta(array(
+                "mkey"          => $key,
+                "data"          => $data[$index],
+                "field_name"    => "page_id",
+                "field_id"      => $Page->page_id
+            ));
+
+            $Meta->save();
+        }
+        
+    }
+
 
     public function save(Request $request)
     {
@@ -81,6 +100,7 @@ class AdminPage extends Controller
             "category_id"   => $request->get('category_id')
         ));
 
+
         if(trim($Page->slug) == "") {
             $Page->slug = Entrie::slugify($Page->title);
         }
@@ -91,9 +111,12 @@ class AdminPage extends Controller
         if(!$error)  {
             try {
                 if($Page->save()) {
+
+                    $this->saveMedias($request, $Page);
+
                     $this->Session->setNotification("Enregistrement effectué avec succès.");
 
-                    $url = $this->app['url_generator']->generate('admin.medias.edit', array(
+                    $url = $this->app['url_generator']->generate('admin.page.edit', array(
                         'id' => $Page->page_id
                     ));
                     
