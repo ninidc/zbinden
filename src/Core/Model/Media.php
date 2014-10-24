@@ -34,15 +34,14 @@ class Media extends Model {
 
     public function beforeCreate() 
     {
-        $this->date = date("Y-m-d H:i:s");
     }
 
     public function beforeSave()
     {
-        if(!$this->data) {
+        if(!$this->date) {
             $this->date = date("Y-m-d H:i:s");
         }
-        
+
         if($this->filename) {
             $this->mime_type = Media::getMimeTypes($this->filename);
         }   
@@ -94,15 +93,20 @@ class Media extends Model {
             } else {
                 throw new \Exception("Erreur lors de l'upload du fichier");
             }
+
         } else {
+
             unset($this->filename);
             unset($this->file);
             unset($this->tmp_name);
             unset($this->type);
             unset($this->mime_type);
             unset($this->date);
+            unset($this->height);
+            unset($this->weight);
 
             return parent::save();
+
         }
     }
 

@@ -57,8 +57,8 @@ ND.mediaSelector = {
                 type = options.type;
             }
         }
-
-        $.get(ND.WEBROOT + 'admin/medias/?page_number=' + ND.mediaSelector.page, {format: "json", type: type},
+        
+        $.get('/admin/medias/?page_number=' + ND.mediaSelector.page, {format: "json", type: type},
             function(data) {
 
             if(ND.isJSON(data)) {
@@ -66,7 +66,7 @@ ND.mediaSelector = {
             } else {
                 var JsonData = data;
             }
-            
+
 			var pages           = new Array();
             
             var nbPages = 0;
@@ -116,7 +116,7 @@ ND.mediaSelector = {
             var template = Handlebars.compile(ND.mediaSelector.getTemplate("medias"));
             $(".mediaSelector .selectorTable").html(
                 template({
-                    medias: JsonData.MEDIAS,
+                    MEDIAS: JsonData.MEDIAS,
                     WEBROOT: ND.WEBROOT
                 })
             );
@@ -259,8 +259,8 @@ ND.mediaSelector = {
         
             ND.mediaSelector.setGallery();
             
-            if(response.Media.id_media) {
-                ND.mediaSelector.loadMediaData(response.Media.id_media);
+            if(response.Media.media_id) {
+                ND.mediaSelector.loadMediaData(response.Media.media_id);
             }
         });
     },

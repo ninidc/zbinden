@@ -52,6 +52,26 @@
 		</div>
 
 		<div class="form-group">
+		  <p>
+		    <h5>Medias <small><a href="#" class="btn btn-default btn-xs media-selector">Ajouter</a></small></h5>
+		  </p>
+		  <table class="table">
+		  	<tr>
+				<td>
+					<textarea name="medias[]" style="display: none;">
+						value
+					</textarea>
+				</td>
+				<td>Type</td>
+				<td>
+					Preview
+				</td>
+				<td align="right"><a href="#" class="remove_meta"><i class="glyphicon glyphicon-remove"></i></a></td>
+			</tr>
+		  </table>
+		</div>
+
+		<div class="form-group">
 			<p class="pull-right">
 				<input type="submit" value="Envoyer" class="btn btn-primary" />
 			</p>
@@ -59,5 +79,21 @@
 
 	</form>
 </div>
+
+
+<script>
+
+$(".media-selector").click(function(e){
+    e.preventDefault();
+
+    ND.mediaSelector.init({
+	  onSave : function(Meta) {
+	  	alert("save...");
+	    ND.mediaSelector.close();
+	  }
+	});
+});
+
+</script>
 
 {{>Admin/partials/footer}}
