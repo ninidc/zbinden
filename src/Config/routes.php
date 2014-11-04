@@ -186,4 +186,25 @@ $routes[] = array(
 	"bind"			=> 'admin.medias.save'
 );
 //--------------------------------------------------------------//
+
+
+//--------------------------------------------------------------//
+//              ADMIN MENU
+//--------------------------------------------------------------//
+$routes[] = array(
+	"route" 		=> '/admin/menu/',
+	'type' 			=> 'get',
+	"controller" 	=> 'AdminMenu',
+	"method" 		=> "index",
+	"bind"			=> 'admin.menu.index'
+);
+
+$routes[] = array(
+	"route" 		=> '/admin/menu/save',
+	'type' 			=> 'post',
+	"controller" 	=> 'AdminMenu',
+	"method" 		=> "save",
+	"bind"			=> 'admin.menu.save'
+);
+//--------------------------------------------------------------//
 ?>

@@ -32,10 +32,32 @@ class Meta extends Model {
         $metadata->addPropertyConstraint('mkey', new Assert\NotBlank());
     }
 
-    static public function findByKey()
-    {
 
+    static public function findByKey($mkey)
+    {
+        global $app;
+        
+        $className = get_called_class();
+
+        $sql = "
+            SELECT 
+                * 
+            FROM 
+                metas 
+            WHERE 
+                mkey = '".$mkey."'
+        ";
+
+        $result = $app['db']->fetchAll($sql);
+        $data = array();
+
+        foreach($result as $r) {
+            $data[] = new $className($r);
+        }
+
+        return $data;
     }
+
 
     static public function deleteByNameAndId($field_name, $field_id) 
     {

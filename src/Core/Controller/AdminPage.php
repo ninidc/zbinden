@@ -79,8 +79,8 @@ class AdminPage extends Controller
         $data = $request->get('meta-data');
 
         foreach($keys as $index=>$key) {
-
             if($key != null && $data[$index] != null) {
+                
                 $Meta = new Meta(array(
                     "mkey"          => $key,
                     "data"          => $data[$index],
@@ -109,7 +109,7 @@ class AdminPage extends Controller
 
 
         if(trim($Page->slug) == "") {
-            $Page->slug = Entrie::slugify($Page->title);
+            $Page->slug = Page::slugify($Page->title);
         }
 
          // Call validator for validate the model

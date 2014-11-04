@@ -1,0 +1,152 @@
+{{>Admin/partials/header}}
+
+<div class="col-md-12">
+    <hr />
+    
+    {{#if MESSAGE}}
+		<p class="bg-success" style="padding: 15px;">{{MESSAGE}}</p>
+	{{/if}}
+
+	{{#if ERROR}}
+		<p class="bg-danger" style="padding: 15px;">{{ERROR}}</p>
+	{{/if}}
+
+
+	<div class="col-md-6">
+
+		<h3>Pages et catégories disponibles</h3>
+		<br />
+		<table class="table table-bordered" id="categoriesItems">
+			<tr>
+				<th>Catégories</th>
+			</tr>
+			{{#ITEMS_CATEGORIES}}
+			<tr data-type="{{type}}">
+				<td>
+					{{label}} <a href="#" class="addMenuItem"><i class="glyphicon glyphicon-plus pull-right"></i></a>
+					<textarea name="menu_item[]" style="display: none;">{{json}}</textarea>
+				</td>
+			</tr>
+			{{/ITEMS_CATEGORIES}}
+		</table>
+
+		<table class="table table-bordered" id="pagesItems">
+			<tr>
+				<th>Pages</th>
+			</tr>
+			{{#ITEMS_PAGES}}
+			<tr data-type="{{type}}">
+				<td>
+					{{label}} <a href="#" class="addMenuItem"><i class="glyphicon glyphicon-plus pull-right"></i></a>
+					<textarea name="menu_item[]" style="display: none;">{{json}}</textarea>
+				</td>
+			</tr>
+			{{/ITEMS_PAGES}}
+		</table>
+
+	</div>
+
+
+	<div class="col-md-6">
+		<form action="/admin/menu/save" method="POST" role="form" enctype="multipart/form-data">
+			<h3>Menu affiché dans le site</h3>
+			<br />
+			<table class="table table-bordered" id="menuContent">
+				{{#ITEMS_MENU}}
+				<tr data-type="{{type}}">
+					<td>
+						{{label}} 
+						<a href="#" class="removeMenuItem">
+							<i class="glyphicon glyphicon-remove pull-right"></i>
+						</a>
+						<textarea name="menu_item[]" style="display: none;">{{json}}</textarea>
+					</td>
+				</tr>
+				{{/ITEMS_MENU}}
+			</table>
+			<input type="submit" value="Save" class="btn btn-default" />
+		</form>
+	</div>
+
+</div>
+
+
+<style>
+#menuContent tr td {
+	background-color: #fff;
+	display: block;
+}
+</style>
+
+<script>
+
+$("#menuContent tr").sortable();
+
+
+function addItem(el)
+{
+	// Set new event
+	var link = $("a", el);
+
+	$("i", link)
+		.removeClass("glyphicon-plus")
+		.addClass("glyphicon-remove");
+
+	link
+		.removeClass("addMenuItem")
+		.addClass("removeMenuItem")
+		.on("click", function(e){
+			e.preventDefault();
+			removeItem($(e.target).parent().parent().parent());
+		});
+
+
+	$("#menuContent").append(el);
+	$("#menuContent tr").sortable();
+}
+
+function removeItem(el)
+{
+	var type 	= el.attr("data-type");
+
+	var link = $("a", el);
+
+	$("i", link)
+		.removeClass("glyphicon-remove")
+		.addClass("glyphicon-plus");
+
+	link
+		.removeClass("removeMenuItem")
+		.addClass("addMenuItem")
+		.on("click", function(e){
+			e.preventDefault();
+			addItem($(e.target).parent().parent().parent());
+		});
+
+
+	switch(type) {
+		case "category":
+			$("#categoriesItems").append(el);
+		break;
+
+		case "page":
+			$("#pagesItems").append(el);
+		break;
+	}
+
+	$("#menuContent tr").sortable();
+}
+
+
+$(".addMenuItem").on("click", function(e) {
+	e.preventDefault();	
+	addItem($(e.target).parent().parent().parent());
+});
+
+$(".removeMenuItem").on("click", function(e){
+	e.preventDefault();	
+	removeItem($(e.target).parent().parent().parent());
+});
+</script>	
+
+{{>Admin/partials/footer}}
