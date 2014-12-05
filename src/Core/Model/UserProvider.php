@@ -1,4 +1,5 @@
 <?php
+
 namespace Core\Model;
 
 use Symfony\Component\Security\Core\User\UserProviderInterface;
@@ -10,7 +11,6 @@ use Doctrine\DBAL\Connection;
  
 class UserProvider implements UserProviderInterface
 {
-
     private $conn;
  
     public function __construct(Connection $conn)
@@ -18,37 +18,17 @@ class UserProvider implements UserProviderInterface
         $this->conn = $conn;
     }
  
-
     public function loadUserByUsername($username)
     {
 
-        global $app;
-
-        $Consultix = new Consultix();
-
-        $_username = isset($_POST["_username"]) ? $_POST["_username"] : null;
-        $_password = isset($_POST["_password"]) ? $_POST["_password"] : null;
-
-        $sql = '
-            SELECT 
-                * 
-            FROM 
-                users 
-            WHERE 
-                username = ?
-        ';
-
-        $stmt = $this->conn->executeQuery($sql, array(strtolower($username)));
+        $stmt = $this->conn->executeQuery('SELECT * FROM users WHERE username = ?', array(strtolower($username)));
 
         if (!$user = $stmt->fetch()) {
             throw new UsernameNotFoundException(sprintf('Username "%s" does not exist.', $username));
         }
-        
-        // User not logged...
-        return new User($user['username'], "", explode(',', $user['roles']), true, true, true, true);
-                
-    }
 
+        return new User($user['username'], $user['password'], explode(',', $user['roles']), true, true, true, true);
+    }
  
     public function refreshUser(UserInterface $user)
     {
@@ -60,7 +40,6 @@ class UserProvider implements UserProviderInterface
         return $this->loadUserByUsername($user->getUsername());
     }
  
-
     public function supportsClass($class)
     {
         return $class === 'Symfony\Component\Security\Core\User\User';

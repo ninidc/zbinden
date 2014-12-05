@@ -6,10 +6,14 @@
 //--------------------------------------------------------------//
 namespace Core;
 
+use Core\Model\Page;
+use Core\Model\Category;
+
 class View
 {
 
 	public $handlebars = null;
+    public $helpers = null;
 
     public function __construct($template_folder, $options = array('prefix' => ''))
     {
@@ -21,56 +25,16 @@ class View
 		    'partials_loader' 	=> $partials_loader
 		));
 
-        // FIXME : sale ! :)
-        $this->handlebars->addHelper("ifCond", function($template, $context, $args, $source) 
-        {
-
-            $args = explode(' ', $args);
-
-            $a = $context->get($args[0]);
-            $b = $context->get($args[2]);
-
-            if(!$b) {
-                $b = $args[2];
-            }
-
-            $operator = $args[1];
-
-            $template->setStopToken('else');
-
-            switch($operator) {
-                case '==':
-                    if($a == $b) {
-                        $buffer = $template->render($context);
-                        $template->setStopToken(false);
-                        $template->discard($context);
-                    } else {
-                        $template->discard($context);
-                        $template->setStopToken(false);
-                        $buffer = $template->render($context);
-                    }
-                break;
-
-                case '!=':
-                    if($a != $b) {
-                        $buffer = $template->render($context);
-                        $template->setStopToken(false);
-                        $template->discard($context);
-                    } else {
-                        $template->discard($context);
-                        $template->setStopToken(false);
-                        $buffer = $template->render($context);
-                    }
-                break;
-            }
-
-            return $buffer;
-        });
-
+        $this->initHelpers();
     }
 
 
-    
+    public function initHelpers()
+    {
+        $this->handlebars->addHelper("ifCond", new View\Component\Handlebars\Helpers\ifCond());
+        $this->handlebars->addHelper("getPagesFromCategory", new View\Component\Handlebars\Helpers\getPagesFromCategory());
+        $this->handlebars->addHelper("getPages", new View\Component\Handlebars\Helpers\getPages());
+    }
 
 
     /**
@@ -80,7 +44,21 @@ class View
     */
     public function render($template, $data = array())
     {
+        global $app;
+
         $format = isset($_GET["format"]) ? $_GET["format"] : null;
+
+        // FIXME : pas très propre :)
+        $url = explode("/", $_SERVER["REQUEST_URI"]);
+
+        if(isset($url[1])) {
+            if($url[1] == "admin") {
+                $data["ADMIN_SECTION"] = isset($url[2]) ? strtolower($url[2]) : null;
+                $data["SESSION"] = array(
+                    "USERNAME" => $app['security']->getToken()->getUsername()
+                );
+            }
+        }
 
         switch($format) {
             case "json":
@@ -97,55 +75,11 @@ class View
 }
 //--------------------------------------------------------------//
 
+
 //--------------------------------------------------------------//
 //  HELPERS TO IMPLEMENT
 //--------------------------------------------------------------//
 /*
-// IfCond Helper
-$app["handlebars"]->addHelper('ifCond', function($template, $context, $args, $source) {
-
-    $args = explode(' ', $args);
-
-    $a = $context->get($args[0]);
-    $b = $context->get($args[2]);
-
-    if(!$b) {
-        $b = $args[2];
-    }
-
-    $operator = $args[1];
-
-    $template->setStopToken('else');
-
-    switch($operator) {
-        case '==':
-            if($a == $b) {
-                $buffer = $template->render($context);
-                $template->setStopToken(false);
-                $template->discard($context);
-            } else {
-                $template->discard($context);
-                $template->setStopToken(false);
-                $buffer = $template->render($context);
-            }
-        break;
-
-        case '!=':
-            if($a != $b) {
-                $buffer = $template->render($context);
-                $template->setStopToken(false);
-                $template->discard($context);
-            } else {
-                $template->discard($context);
-                $template->setStopToken(false);
-                $buffer = $template->render($context);
-            }
-        break;
-    }
-
-    return $buffer;
-});
-
 
 //
 //  FIXME : revoir completement l'algo, utiliser les REGEX au lieu d'explode.

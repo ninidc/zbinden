@@ -8,6 +8,23 @@ $routes[] = array(
 	"controller" 	=> 'Frontend',
 	"method" 		=> "index",
 );
+
+$routes[] = array(
+	"route" 		=> '/{slug}-{id}.html',
+	'type' 			=> 'get',
+	"controller" 	=> 'Frontend',
+	"method" 		=> "page",
+	"bind"			=> 'front.page'
+);
+
+$routes[] = array(
+	"route" 		=> '/{slug}/',
+	'type' 			=> 'get',
+	"controller" 	=> 'Frontend',
+	"method" 		=> "category",
+	"bind"			=> 'front.category'
+);
+
 //--------------------------------------------------------------//
 
 
@@ -20,6 +37,14 @@ $routes[] = array(
 	"controller" 	=> 'Admin',
 	"method" 		=> "index",
 );
+
+$routes[] = array(
+	"route" 		=> '/login',
+	'type' 			=> 'get',
+	"controller" 	=> 'Admin',
+	"method" 		=> "login",
+);
+
 
 //--------------------------------------------------------------//
 //              ADMIN PAGES

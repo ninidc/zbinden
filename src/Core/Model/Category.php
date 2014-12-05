@@ -32,6 +32,46 @@ class Category extends Model {
         $metadata->addPropertyConstraint('name', new Assert\NotBlank());
     }
 
+    static public function findBySlug($slug) 
+    {
+
+        global $app;
+        
+        $className = get_called_class();
+
+        $sql = "
+            SELECT 
+                * 
+            FROM 
+                categories 
+            WHERE 
+                slug = '".$slug."'
+        ";
+
+        $result = $app['db']->fetchAll($sql);
+        $data = array();
+
+        if(sizeof($result) == 1) {
+            return new $className($result[0]);
+        } else {
+            foreach($result as $r) {
+                $data[] = new $className($r);
+            }
+        }
+        
+        return $data;
+    }
+
+
+    public function fetchPages($options  = array()) 
+    {
+        return Page::fetchAll(array_merge(array(
+            "WHERE" => array(
+                "category_id" => $this->category_id
+            )
+        ), $options));
+    }
+
 }
 //--------------------------------------------------------------//
 ?>

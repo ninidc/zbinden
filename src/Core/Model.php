@@ -4,19 +4,33 @@
 //--------------------------------------------------------------//
 namespace Core;
 
+use Core\Model\Meta;
+
 class Model
 {
-    
+
     protected static $table;
     protected static $index;
+
+    public function __construct($data = array()) 
+    {
+        if(!empty($data)) {
+            $this->fromArray($data);
+        }
+    }
 
 	/*
     *   Magic getters
     */
 	public function __get($name) 
     {
-        if(isset($this->$name)) 
-        {
+        global $app;
+
+        if($name == "app") {    
+            return $app;
+        }
+
+        if(isset($this->$name)) {
             return $this->$name;
         }
         
@@ -28,8 +42,7 @@ class Model
     */
     public function __set($name, $value)
     {
-    	if(isset($this->$name)) 
-        {
+    	if(isset($this->$name)) {
         	$this->$name = $value;
         }
     }
@@ -55,17 +68,12 @@ class Model
         $attr       = get_object_vars($this);
         $attrArray  = array();
 
-        foreach($attr as $key=>$value) 
-        {
-            if(!empty($attrList))
-            {
-                if(in_array($key, $attrList)) 
-                {
+        foreach($attr as $key=>$value) {
+            if(!empty($attrList)) {
+                if(in_array($key, $attrList)) {
                     $attrArray[$key] = $value;
                 }
-            } 
-            else 
-            {
+            } else {
                 $attrArray[$key] = $value;
             }
         }
@@ -83,11 +91,9 @@ class Model
         if(empty($data))
             return false;
 
-        foreach($data as $name=>$value) 
-        {
+        foreach($data as $name=>$value) {
             if(property_exists($this, $name))
                 $this->$name = $value;
-
         }
         
         return $this;
@@ -115,6 +121,34 @@ class Model
     public function afterUpdate(){}
  
  
+    /*
+    *   Return all object metas
+    */
+    public function getParsedMetas()
+    {
+        $className  = get_called_class();
+        $indexName  = $className::$index;
+
+        $Metas  = Meta::FetchAllByNameAndId($indexName, $this->$indexName);
+        $data   = array();
+
+        if(sizeof($Metas) < 1) {
+            return null;
+        }
+
+        foreach($Metas as $index => $Meta) {
+            $MetaData = json_decode($Meta->data, true);
+
+            $MetaData["mkey"] = $Meta->mkey;
+            $MetaData["data"] = $Meta->data;
+
+            $data[$Meta->mkey][] = $MetaData;
+        }
+
+        return $data;
+    }
+
+
     /*
     *   Saving model into the database
     */  
@@ -232,8 +266,8 @@ class Model
         /*
             $options = array(
                 "WHERE" => array(
-                    "id" => 1,
-                    "type" => 2
+                    "id" => "=1",
+                    "type" => "> 2"
                 )
             )
             
@@ -251,7 +285,6 @@ class Model
             WHERE 1
         ';
 		
-
         if(isset($options["WHERE"])) {
             foreach($options["WHERE"] as $key=>$value) {
                 $sql .=  ' AND ' . $key.' = "' . $value . '"';
@@ -267,15 +300,14 @@ class Model
         }
         
         $result = $app['db']->fetchAll($sql);
-        $data = array();
+        $data   = array();
 
         foreach($result as $r) {
             $data[] = new $className($r);
         }
 
-		
         return $data;
-        
+
     }
 
     

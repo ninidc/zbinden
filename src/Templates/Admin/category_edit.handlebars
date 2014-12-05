@@ -16,6 +16,22 @@
 		<input type="hidden" name="category_id" value="{{CATEGORY.category_id}}">
 
 		<div class="form-group">
+		  <label>
+		    Image 
+		    <small><a href="#" class="btn btn-default btn-xs category-hero">Ajouter</a></small>
+		  </label>
+		  <div id="category-hero">
+		  	<!-- MEDIAS FROM THE MEDIA SELECTOR -->
+		  	{{#if METAS.category-hero}}
+			  	{{#METAS.category-hero}}
+			  		{{>Admin/partials/media.row.handlebars}}
+			  	{{/METAS.category-hero}}
+		  	{{/if}}
+		  	<!-- // -->
+		  </div>
+		</div>
+
+		<div class="form-group">
 			<label for="inputName">Nom</label>
 			<input type="text" class="form-control" id="inputName" placeholder="Nom" name="name" value="{{CATEGORY.name}}">
 		</div>
@@ -45,4 +61,10 @@
 	</form>
 </div>
 
+<script>
+$(".category-hero").click(function(e){
+    e.preventDefault();
+    ND.setMetasSelector("category-hero", $("#category-hero"));
+});
+</script>
 {{>Admin/partials/footer}}

@@ -14,8 +14,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\File;
 use Handlebars\Handlebars;
-use Core\Model\Site;
-use Core\Controller\Website;
 //--------------------------------------------------------------//
 
 
@@ -39,18 +37,18 @@ require("Config/databases.php");
 $app->register(new Silex\Provider\ValidatorServiceProvider());
 $app->register(new Silex\Provider\SessionServiceProvider());
 $app->register(new Silex\Provider\UrlGeneratorServiceProvider());
-/*
 $app->register(new Silex\Provider\RememberMeServiceProvider());
+
 $app->register(new Silex\Provider\SecurityServiceProvider(), array(
     'security.firewalls' => array(
         'default' => array(
-            'pattern' => '^/play/',
+            'pattern' => '^/admin/',
             'form' => array(
-                'login_path' => '/inscription', 
-                'check_path' => '/play/signin'
+                'login_path' => '/login', 
+                'check_path' => '/admin/signin'
             ),
             'logout' => array(
-                'logout_path' => '/play/logout'
+                'logout_path' => '/admin/logout'
             ),
             'users' => $app->share(function() use ($app) {
                 return new Core\Model\UserProvider($app['db']);
@@ -58,10 +56,10 @@ $app->register(new Silex\Provider\SecurityServiceProvider(), array(
         ),
     ),
     'security.access_rules' => array(
-        array('^/play$', 'USER'),
+        array('^/admin$', 'USER'),
     )
 ));
-*/
+
 $app['upload_folder']       = __DIR__ . '/../web/uploads/';
 $app['sites_folder']        = __DIR__ . '/../web/sites/';
 $app['template_folder']     = __DIR__ . '/Templates/';
@@ -112,6 +110,8 @@ $app->error(function (\Exception $e, $code) {
 */
 //--------------------------------------------------------------//
 
+
+$app['session']->start();
 
 //--------------------------------------------------------------//
 //              RETURN APP...

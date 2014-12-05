@@ -178,6 +178,57 @@
                 );
             });
 
+        },
+
+        setMetasSelector: function(metaName, targetEl)
+        {
+            ND.mediaSelector.init({
+              onSave : function(data) {
+                
+                var Meta    = data;
+                Meta.data   = JSON.stringify(Meta);
+                Meta.mkey   = metaName;
+
+                $.get(ND.WEBROOT + 'templates/Admin/partials/media.row.handlebars', function(template) {
+                    var template = Handlebars.compile(template);
+                    targetEl.append(template(data));
+                });
+
+                ND.mediaSelector.close();
+              }
+            });
+        },
+
+        setEditorMediasSelector: function(ckInstance)
+        {
+            // Get CKEditor instance
+              var oEditor = null;
+              for(var i in CKEDITOR.instances) {
+                if(CKEDITOR.instances[i].name == ckInstance) {
+                  oEditor = CKEDITOR.instances[i];
+                }
+              }
+
+              ND.mediaSelector.init({
+                fieldName : "media",
+                onSave : function(data) {
+
+                  if(data.mime_type != "") {
+
+                    var split = data.mime_type.split('/');
+
+                    switch(split[0]) {
+                        case "image":
+                            var element = CKEDITOR.dom.element.createFromHtml('<img src="/web/uploads/medias/'+ data.file + '" />');
+                        break;
+                    }
+
+                    oEditor.insertElement(element);
+                  }
+
+                  ND.mediaSelector.close();
+                }
+              });
         }
     }
 

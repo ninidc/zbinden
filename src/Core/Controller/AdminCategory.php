@@ -7,6 +7,7 @@ namespace Core\Controller;
 use Core\Controller;
 use Core\View;
 use Core\Model\Category;
+use Core\Model\Meta;
 use Core\Model\Page;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -59,6 +60,29 @@ class AdminCategory extends Controller
     }
 
 
+    public function saveMetas(Request $request, $Category) 
+    {
+        // Deleting all metas before new save...
+        Meta::deleteByNameAndId("category_id", $Category->category_id);
+
+        $keys = $request->get('meta-key');
+        $data = $request->get('meta-data');
+
+        foreach($keys as $index=>$key) {
+            if($key != null && $data[$index] != null) {
+                
+                $Meta = new Meta(array(
+                    "mkey"          => $key,
+                    "data"          => $data[$index],
+                    "field_name"    => "category_id",
+                    "field_id"      => $Category->category_id
+                ));
+
+                $Meta->save();
+            }
+        }
+    }
+
 
     public function edit($id = null)
     {
@@ -67,6 +91,7 @@ class AdminCategory extends Controller
         $data = array(
             "CATEGORIES"    => Category::fetchAll(),
             "CATEGORY"      => $Category,
+            "METAS"         => $Category->getParsedMetas(),
             "MESSAGE"       => $this->Session->getNotification(),
             "TITLE"         => isset($Category->name) ? $Category->name : "Nouvelle catégorie"
         );
@@ -101,6 +126,9 @@ class AdminCategory extends Controller
         if(!$error)  {
             try {
                 if($Category->save()) {
+
+                    $this->saveMetas($request, $Category);
+
                     $this->Session->setNotification("Enregistrement effectué avec succès.");
 
                     $url = $this->app['url_generator']->generate('admin.categories.edit', array(

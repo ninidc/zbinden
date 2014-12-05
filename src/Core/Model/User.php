@@ -14,6 +14,9 @@ class User extends Model {
     public $user_id;
     public $username;
     public $password;
+    public $email;
+    public $firstname;
+    public $lastname;
     public $roles = "USER";
 
     public static $table = "users";
@@ -29,8 +32,8 @@ class User extends Model {
 
     static public function loadValidatorMetadata(ClassMetadata $metadata)
     {
+        $metadata->addPropertyConstraint('email', new Assert\Email());
         $metadata->addPropertyConstraint('username', new Assert\NotBlank());
-        $metadata->addPropertyConstraint('password', new Assert\NotBlank());
     }
 
 
@@ -44,9 +47,20 @@ class User extends Model {
     }
 
 
+
+    public function beforeUpdate()
+    {
+        if(trim($this->password) == "" || trim($this->password) == null) {
+            unset($this->password);
+        } else {
+            $this->password = $this->encodePasswd($this->password);
+        }
+    }
+
+
     public function beforeCreate()
-    {        
-        $this->passwd = $this->encodePasswd($this->passwd);
+    {       
+        $this->password     = $this->encodePasswd($this->password);
     }
 
 }

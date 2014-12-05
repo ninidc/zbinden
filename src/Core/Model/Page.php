@@ -17,6 +17,7 @@ class Page extends Model {
     public $date;
     public $category_id;
     public $content;
+    public $resume;
     public $status = "draft";
     
     public static $table = "pages";
@@ -38,18 +39,6 @@ class Page extends Model {
     static public function loadValidatorMetadata(ClassMetadata $metadata)
     {
         $metadata->addPropertyConstraint('slug', new Assert\NotBlank());
-    }
-
-    public function getParsedMetas()
-    {
-        $Metas  = Meta::FetchAllByNameAndId("page_id", $this->page_id);
-        $data   = array();
-
-        foreach($Metas as $Meta) {
-            $data = json_decode($Meta->data);
-        }
-
-        return $data;
     }
 
 }

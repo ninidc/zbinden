@@ -23,7 +23,8 @@ class AdminUser extends Controller
     public function index()
     {
         $data = array(
-            "USERS" => User::fetchAll()
+            "USERS"     => User::fetchAll(),
+            "TITLE"     => "Utilisateurs"
         );
 
         return $this->View->render("Admin/user_index", $data);
@@ -31,9 +32,13 @@ class AdminUser extends Controller
 
     public function edit($id = null)
     {
+        $User = User::find($id);
+
         $data = array(
-            "USER" => User::find($id),
-            "MESSAGE" => $this->Session->getNotification()
+            "USER"      => $User,
+            "MESSAGE"   => $this->Session->getNotification(),
+            "TITLE"     => $User->username,
+            "TITLE"     => "Utilisateurs"
         );
 
         return $this->View->render("Admin/user_edit", $data);
@@ -50,14 +55,15 @@ class AdminUser extends Controller
 
     public function save(Request $request)
     {
-        global $app;
-
         $encoder = new MessageDigestPasswordEncoder();
 
         $User = new User(array(
-            "user_id"   => $request->get('user_id'),
-            "username"  => $request->get('username'),
-            "password"  => $encoder->encodePassword($request->get('passwd'), ''),
+            "user_id"       => $request->get('user_id'),
+            "username"      => $request->get('username'),
+            "email"         => $request->get('email'),
+            "firstname"     => $request->get('firstname'),
+            "lastname"      => $request->get('lastname'),
+            "password"      => $request->get('passwd')
         ));
 
         // Call validator for validate the model

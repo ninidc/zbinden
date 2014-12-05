@@ -35,12 +35,14 @@ ND.mediaSelector = {
     },
 
     // When save button is activated
-    onSave: function(data) {
+    onSave: function(data) 
+    {
         console.log("saving...");
         console.log(data);
     },
 
-    getTemplate: function(id) {
+    getTemplate: function(id) 
+    {
 
         if(typeof(this.templates[ id ]) != "undefined")
             return this.templates[ id ];
@@ -48,7 +50,8 @@ ND.mediaSelector = {
         return null;
     },
 
-    setGallery: function(options) {
+    setGallery: function(options) 
+    {
     
         var type = null;
 
@@ -154,7 +157,8 @@ ND.mediaSelector = {
     },
 
 
-    loadMediaData: function(id) {
+    loadMediaData: function(id) 
+    {
         // Chargement du media.
         $.get('/admin/medias/' + id, {format: "json"},
             function(data) {
@@ -209,7 +213,8 @@ ND.mediaSelector = {
     },
     
     
-    setDropZone: function() {
+    setDropZone: function() 
+    {
 
         var objId = ".filedropzone";
 
@@ -265,17 +270,21 @@ ND.mediaSelector = {
         });
     },
     
-    save: function(media) {
-    },
+    save: function(media) 
+    {},
 
     close: function() 
     {
         ND.lightbox.close();
     },
     
-    remove: function(element) {
-        $(element).parent().parent().fadeOut(500, function() {
-            $(element).parent().remove();
+    remove: function(element) 
+    {
+
+        var el = $(element).parent().parent();
+
+        el.fadeOut(500, function() {
+            el.remove();
         });
     }
     

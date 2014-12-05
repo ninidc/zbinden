@@ -25,6 +25,11 @@ class Admin extends Controller
         ));
     }
 
+    public function login()
+    {
+        return $this->View->render("Admin/login");
+    }
+
 }
 //--------------------------------------------------------------//
 ?>

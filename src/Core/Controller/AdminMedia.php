@@ -21,7 +21,7 @@ class AdminMedia extends Controller
     {
 
         return $this->View->render("Admin/media_index", array(
-        	"TITLE" => "MEDIAS",
+        	"TITLE" => "Médias",
             "MEDIAS" => Media::fetchAll()
         ));
     }
@@ -31,7 +31,7 @@ class AdminMedia extends Controller
         $Media = Media::find($id);
 
         return $this->View->render("Admin/media_edit", array(
-            "TITLE" => "MEDIAS",
+            "TITLE" => "Médias",
             "MEDIA" => $Media
         ));
     }

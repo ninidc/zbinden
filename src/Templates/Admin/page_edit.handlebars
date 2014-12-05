@@ -16,8 +16,6 @@
 		<input type="hidden" name="page_id" value="{{PAGE.page_id}}">
 		<input type="hidden" name="date" value="{{PAGE.date}}">
 
-		
-
 		<div class="form-group">
 			<label for="inputStatus">Status</label>
 			<select name="status" class="form-control" id="inputStatus">
@@ -48,18 +46,22 @@
 
 		<div class="form-group">
 			<label for="inputContent">Contenu</label>
-			<textarea class="form-control" rows="5" id="inputContent" name="content">{{PAGE.content}}</textarea>
+			<p><a href="#" class="btn btn-default addMediaContent" data-lang="{{Language.code}}">Ajouter une image</a></p>
+			<textarea class="form-control ckeditor" rows="5" id="inputContent" name="content">{{PAGE.content}}</textarea>
 		</div>
 
 		<div class="form-group">
-		  <p>
-		    <h5>Medias <small><a href="#" class="btn btn-default btn-xs media-selector">Ajouter</a></small></h5>
-		  </p>
+		  <label>
+		    Medias 
+		    <small><a href="#" class="btn btn-default btn-xs media-selector">Ajouter</a></small>
+		  </label>
 		  <div id="medias">
 		  	<!-- MEDIAS FROM THE MEDIA SELECTOR -->
-		  	{{#METAS}}
-		  		{{>Admin/partials/media.row.handlebars}}
-		  	{{/METAS}}
+		  	{{#if METAS.page-media}}
+			  	{{#METAS.page-media}}
+			  		{{>Admin/partials/media.row.handlebars}}
+			  	{{/METAS.page-media}}
+		  	{{/if}}
 		  	<!-- // -->
 		  </div>
 		</div>
@@ -75,24 +77,15 @@
 
 
 <script>
+
+$(".addMediaContent").click(function(e){
+  e.preventDefault();
+  ND.setEditorMediasSelector("inputContent");
+});
+
 $(".media-selector").click(function(e){
     e.preventDefault();
-
-    ND.mediaSelector.init({
-	  onSave : function(data) {
-	  	
-	  	var Meta 	= data;
-	  	Meta.data 	= JSON.stringify(Meta);
-	  	Meta.mkey 	= "page-media";
-
-	  	$.get(ND.WEBROOT + 'templates/Admin/partials/media.row.handlebars', function(template) {
-    		var template = Handlebars.compile(template);
-    		$("#medias").append(template(data));
-		});
-
-	    ND.mediaSelector.close();
-	  }
-	});
+    ND.setMetasSelector("page-media", $("#medias"));
 });
 
 </script>

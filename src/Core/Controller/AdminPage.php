@@ -70,7 +70,7 @@ class AdminPage extends Controller
     }
 
 
-    public function saveMedias(Request $request, $Page) 
+    public function saveMetas(Request $request, $Page) 
     {
         // Deleting all metas before new save...
         Meta::deleteByNameAndId("page_id", $Page->page_id);
@@ -119,7 +119,7 @@ class AdminPage extends Controller
             try {
                 if($Page->save()) {
 
-                    $this->saveMedias($request, $Page);
+                    $this->saveMetas($request, $Page);
 
                     $this->Session->setNotification("Enregistrement effectué avec succès.");
 
